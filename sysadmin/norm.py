@@ -43,7 +43,7 @@ def file_name(value):
 def move(paths):
     def rename(path):
         normalized = file_name(path)
-        if path != normalized:
+        if path != normalized and os.path.exists(path):
             os.renames(path, normalized)
 
     if isinstance(paths, str):
@@ -62,8 +62,7 @@ def move(paths):
 
 def run(args):
     if len(args) > 0:
-        paths = filter(lambda x: x != '-', args)
-        move(paths)
+        move(args)
     else:
         for line in sys.stdin:
             print(file_name(line))

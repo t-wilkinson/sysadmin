@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sysadmin",
-    version="0.0.1",
+    version="0.0.2",
     author="t-wilkinson",
     author_email="winston.trey.wilkinson@gmail.com",
     description="Packages to help with sys admin",
