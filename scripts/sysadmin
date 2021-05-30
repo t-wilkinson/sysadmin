@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+import sys
+import sysadmin.norm
+import argparse
+
+commands = {
+    'norm': sysadmin.norm.run
+}
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('command', choices=commands.keys())
+    args = parser.parse_args()
+    commands[args.command](
+        [arg for arg in vars(args).values() if arg != args.command]
+    )

@@ -60,10 +60,14 @@ def move(paths):
                 rename(path)
 
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        paths = filter(lambda x: x != '-', sys.agv[1:])
+def run(args):
+    if len(args) > 0:
+        paths = filter(lambda x: x != '-', args)
         move(paths)
     else:
         for line in sys.stdin:
             print(file_name(line))
+
+
+if __name__ == '__main__':
+    run(sys.argv[:1])
