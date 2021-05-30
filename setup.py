@@ -12,6 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/t-wilkinson/sysadmin",
+    scripts=['sysadmin/norm.py']
     project_urls={
     },
     classifiers=[
