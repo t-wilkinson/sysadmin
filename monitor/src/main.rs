@@ -7,8 +7,10 @@
  *  - str
  *  - macros
  * improve api
+ * specify wanted services
  * develop frontend to make requests to backend
  * include more metrics
+ *  [handle signint](https://rust-cli.github.io/book/in-depth/signals.html)
  * implement logger for binary
  */
 
