@@ -23,7 +23,7 @@ def run_monitor(args):
 
 
 def run_norm(args):
-    sysadmin.norm.run(args)
+    norm.run(args)
 
 
 commands = {
