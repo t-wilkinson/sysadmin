@@ -1,0 +1,48 @@
+[package]
+name = "sysadmin"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
+confy = "0.5.0"
+serde = { version = "1.0.145", features = ["derive"] }
+regex = "1"
+lazy_static = "1.4.0"
+colored = "2.0.0"
+log = "0.4.17"
+shellexpand = "2.1.2"
+simple_logger = "2.3.0"
+reqwest = "0.11.12"
+futures = "0.3.24"
+async-process = "1.5.0"
+
+[lib]
+name = "sysadmin"
+path = "src/lib/mod.rs"
+
+[[bin]]
+name = "sysadmin"
+path = "src/main.rs"
+
+[[bin]]
+name = "file_sharing"
+path = "src/modules/file_sharing/main.rs"
+
+[[bin]]
+name = "monitor"
+path = "src/modules/monitor/main.rs"
+
+[[bin]]
+name = "req"
+path = "src/modules/req/main.rs"
+
+[[bin]]
+name = "norm"
+path = "src/modules/norm/main.rs"
+
+[[bin]]
+name = "prj"
+path = "src/modules/project_manager/main.rs"
