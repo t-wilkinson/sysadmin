@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use super::thread_pool::ThreadPool;
 use colored::Colorize;
 use std::{

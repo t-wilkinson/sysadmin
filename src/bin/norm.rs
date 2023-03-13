@@ -1,5 +1,4 @@
-mod lib;
-use lib::run;
+use sysadmin::norm::run;
 
 fn main() {
     run();

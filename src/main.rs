@@ -1,8 +1,7 @@
 #![allow(unused)]
 use clap::{Parser, Subcommand};
 // use simple_logger::SimpleLogger;
-mod lib;
-mod modules;
+use sysadmin;
 
 #[derive(Parser)]
 struct Cli {
@@ -13,27 +12,27 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Normalize stuff
-    Norm(modules::norm::Cli),
+    Norm(sysadmin::norm::Cli),
 
     /// File sharing
     /// Web server that allows
     ///     - sending files to server and reading files from file
     ///     - password protection
-    Fs(modules::file_sharing::Cli),
+    Fs(sysadmin::file_sharing::Cli),
 
     /// Monitor server
-    Monitor(modules::monitor::Cli),
+    Monitor(sysadmin::monitor::Cli),
 
     /// Projects
-    Prj(modules::project_manager::Cli),
+    Prj(sysadmin::project_manager::Cli),
     /*
     /// Requests
-    Req(modules::req::Cli),
+    Req(sysadmin::req::Cli),
     */
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // let mut cfg = lib::config::load_config();
+    // let mut cfg = sysadmin::config::load_config();
     // SimpleLogger::new().init().unwrap();
 
     let cli = Cli::parse();

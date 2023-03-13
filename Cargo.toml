@@ -19,30 +19,33 @@ reqwest = "0.11.12"
 futures = "0.3.24"
 async-process = "1.5.0"
 
+[dev-dependencies]
+rand = "0.8.5"
+
 [lib]
 name = "sysadmin"
-path = "src/lib/mod.rs"
+path = "src/lib.rs"
 
 [[bin]]
 name = "sysadmin"
 path = "src/main.rs"
 
 [[bin]]
-name = "file_sharing"
-path = "src/modules/file_sharing/main.rs"
-
-[[bin]]
-name = "monitor"
-path = "src/modules/monitor/main.rs"
-
-[[bin]]
-name = "req"
-path = "src/modules/req/main.rs"
-
-[[bin]]
 name = "norm"
-path = "src/modules/norm/main.rs"
+path = "src/bin/norm.rs"
 
-[[bin]]
-name = "prj"
-path = "src/modules/project_manager/main.rs"
+# [[bin]]
+# name = "file_sharing"
+# path = "src/bin/file_sharing.rs"
+
+# [[bin]]
+# name = "monitor"
+# path = "src/monitor.rs"
+
+# [[bin]]
+# name = "req"
+# path = "src/req.rs"
+
+# [[bin]]
+# name = "prj"
+# path = "src/project_manager.rs"
