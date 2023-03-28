@@ -12,8 +12,9 @@ fn create_test_directory() -> TempDir {
 #[test]
 fn it_normalizes_directories() -> Result<(), std::io::Error> {
     let temp_dir = create_test_directory();
+    let temp_dir_path = String::from(temp_dir.path.to_str().unwrap());
 
-    let normalized_path = norm::normalize_path(temp_dir.path.to_str().unwrap(), true);
+    let normalized_path = norm::normalize_path(temp_dir_path, true);
     for entry in fs::read_dir(normalized_path)? {
         println!("{:?}", entry?.path());
     }

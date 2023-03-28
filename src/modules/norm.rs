@@ -18,20 +18,26 @@ pub fn get_normalized_path(string: &str) -> String {
     string
 }
 
-// TODO: given that the path changes, we should move the path (not pass a reference)
-pub fn normalize_path(path: &str, normalize_contents: bool) -> String {
-    let normalized_path = get_normalized_path(path);
-    match fs::rename(path, &normalized_path) {
-        Ok(_) => {
-            if normalize_contents {
-                let _ = normalize_dir(Path::new(&normalized_path), normalize_contents);
-            }
-        }
-        Err(_) => eprintln!(
-            "Error: could not rename `{}` to `{}`",
-            path, &normalized_path
-        ),
+/// Normalize the given path and optionally recurse if the path is a directory
+///
+/// We want to move the path because we are renaming the file.
+pub fn normalize_path(path: String, normalize_contents: bool) -> String {
+    let normalized_path = get_normalized_path(&path);
+    let _ = fs::rename(&path, &normalized_path);
+    if normalize_contents {
+        let _ = normalize_dir(Path::new(&normalized_path), normalize_contents);
     }
+    // match fs::rename(&path, &normalized_path) {
+    //     Ok(_) => {
+    //         if normalize_contents {
+    //             let _ = normalize_dir(Path::new(&normalized_path), normalize_contents);
+    //         }
+    //     }
+    //     Err(err) => eprintln!(
+    //         "Error: could not rename `{}` to `{}` {}",
+    //         &path, &normalized_path, err
+    //     ),
+    // }
 
     normalized_path
 }
@@ -39,18 +45,22 @@ pub fn normalize_path(path: &str, normalize_contents: bool) -> String {
 fn normalize_dir(path: &Path, normalize_contents: bool) -> Result<(), io::Error> {
     for entry in fs::read_dir(path)? {
         let path_buf = entry?.path();
-        let path = path_buf.to_str().unwrap();
+        let path = String::from(path_buf.to_str().unwrap());
         normalize_path(path, path_buf.is_dir() && normalize_contents);
     }
 
     Ok(())
 }
 
-fn normalize_files(cli: &Cli, paths: &Vec<String>) -> Result<(), io::Error> {
+fn normalize_files(cli: &Cli, paths: &Vec<String>) -> Vec<String> {
+    let mut normalized_paths = Vec::new();
+
     for path in paths {
         match fs::metadata(path) {
             Ok(md) => {
-                normalize_path(path, md.is_dir() && cli.recursive);
+                let normalized_path =
+                    normalize_path(String::from(path), md.is_dir() && cli.recursive);
+                normalized_paths.push(normalized_path);
             }
             Err(_) => {
                 eprintln!("Error: could not find metadata for `{}`", path);
@@ -58,7 +68,7 @@ fn normalize_files(cli: &Cli, paths: &Vec<String>) -> Result<(), io::Error> {
         }
     }
 
-    Ok(())
+    normalized_paths
 }
 
 fn normalize_stdin() {
@@ -70,14 +80,14 @@ fn normalize_stdin() {
 #[derive(Parser)]
 pub struct Cli {
     paths: Option<Vec<String>>,
-    #[arg(short, long)]
+    #[arg(short, long, default_value_t = true)]
     recursive: bool,
 }
 
 impl Cli {
     pub fn run(&self) {
         if let Some(paths) = &self.paths {
-            normalize_files(self, paths).unwrap();
+            normalize_files(self, paths);
         } else {
             normalize_stdin();
         }
